@@ -130,7 +130,13 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     Row(
                       children: [
                         CircularButton(
-                          icon: const Icon(Icons.arrow_forward),
+                          icon: Icon(
+                            Icons.arrow_forward,
+                            color: MyColors.textColor(
+                              darkmodeClr: MyColors.lightModtxtClr,
+                              lightModeClr: MyColors.darkModtxtClr,
+                            ),
+                          ),
                           onPressed: () {},
                           bgClr: MyColors.textColor(
                               darkmodeClr: MyColors.darkactionColor,
