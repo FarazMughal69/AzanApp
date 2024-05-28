@@ -12,7 +12,7 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(),
+      decoration: const InputDecoration(),
     );
   }
 }

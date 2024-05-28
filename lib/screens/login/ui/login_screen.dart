@@ -15,6 +15,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
   @override
   Widget build(BuildContext context) {
     final double horizontalPadding = mq.width * 0.11;
+    bool rememberMe = false;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -87,8 +88,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       'SignUp?',
                       style: Style.bodyTxtStyle(
                         txtColor: MyColors.textColor(
-                          darkmodeClr: MyColors.darkactionColor,
-                          lightModeClr: MyColors.lightactionColor,
+                          darkmodeClr: MyColors.lightactionColor,
+                          lightModeClr: MyColors.darkactionColor,
                         ),
                       ),
                     ),
@@ -108,46 +109,85 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 ),
               ),
             ),
-
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        CircularButton(
-                          image: Image.asset('assets/images/google.png'),
-                          onPressed: () {},
-                        ),
-                        CircularButton(
-                          image: Image.asset('assets/images/facebook.png'),
-                          onPressed: () {},
-                        ),
-                      ],
+              padding: EdgeInsets.symmetric(
+                  horizontal: mq.width * 0.05, vertical: 20),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: (value) {
+                      setState(() {
+                        if (!rememberMe) {
+                          rememberMe = true;
+                        } else {
+                          rememberMe = false;
+                        }
+                      });
+                    },
+                  ),
+                  Text(
+                    "Remember me?",
+                    style: Style.bodyTxtStyle(
+                      txtColor: MyColors.textColor(),
+                      fontSize: 13,
                     ),
-                    Row(
-                      children: [
-                        CircularButton(
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            color: MyColors.textColor(
-                              darkmodeClr: MyColors.lightModtxtClr,
-                              lightModeClr: MyColors.darkModtxtClr,
-                            ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Forget Password?",
+                        style: Style.bodyTxtStyle(
+                          txtColor: MyColors.textColor(
+                            darkmodeClr: MyColors.lightactionColor,
+                            lightModeClr: MyColors.darkactionColor,
                           ),
-                          onPressed: () {},
-                          bgClr: MyColors.textColor(
-                              darkmodeClr: MyColors.darkactionColor,
-                              lightModeClr: MyColors.lightactionColor),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ))
+                ],
+              ),
+            ),
+            SizedBox(
+              height: mq.height * 0.2,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      CircularButton(
+                        image: Image.asset('assets/images/google.png'),
+                        onPressed: () {},
+                      ),
+                      CircularButton(
+                        image: Image.asset('assets/images/facebook.png'),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      CircularButton(
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          color: MyColors.textColor(
+                            darkmodeClr: MyColors.lighttxtClr,
+                            lightModeClr: MyColors.darktxtClr,
+                          ),
+                        ),
+                        onPressed: () {},
+                        bgClr: MyColors.textColor(
+                          darkmodeClr: MyColors.lightactionColor,
+                          lightModeClr: MyColors.darkactionColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
