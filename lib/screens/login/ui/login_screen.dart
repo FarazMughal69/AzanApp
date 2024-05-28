@@ -108,12 +108,14 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Row(
                       children: [
@@ -143,7 +145,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                               lightModeClr: MyColors.lightactionColor),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
