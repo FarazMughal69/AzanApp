@@ -1,3 +1,4 @@
+import 'package:azan/screens/signup/ui/signup.dart';
 import 'package:azan/widgets/circular_btn.dart';
 
 import '../../../constant_folder/utility_export.dart';
@@ -83,7 +84,16 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const MySignUpScrren();
+                          },
+                        ),
+                      );
+                    },
                     child: Text(
                       'SignUp?',
                       style: Style.bodyTxtStyle(
@@ -103,8 +113,20 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    MyTextFormField(),
-                    MyTextFormField(),
+                    MyTextFormField(
+                      leadingIcon: Icons.alternate_email_rounded,
+                      obscureText: false,
+                      hintText: 'Email',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MyTextFormField(
+                      leadingIcon: Icons.password,
+                      obscureText: true,
+                      hintText: 'password',
+                      suffix: true,
+                    ),
                   ],
                 ),
               ),
@@ -135,16 +157,17 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                   ),
                   const Spacer(),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Forget Password?",
-                        style: Style.bodyTxtStyle(
-                          txtColor: MyColors.textColor(
-                            darkmodeClr: MyColors.lightactionColor,
-                            lightModeClr: MyColors.darkactionColor,
-                          ),
+                    onPressed: () {},
+                    child: Text(
+                      "Forget Password?",
+                      style: Style.bodyTxtStyle(
+                        txtColor: MyColors.textColor(
+                          darkmodeClr: MyColors.lightactionColor,
+                          lightModeClr: MyColors.darkactionColor,
                         ),
-                      ))
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

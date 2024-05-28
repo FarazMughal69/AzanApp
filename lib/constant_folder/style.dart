@@ -12,8 +12,10 @@ class Style {
     );
   }
 
-  static TextStyle bodyTxtStyle(
-      {Color txtColor = MyColors.lighttxtClr, double fontSize = 15}) {
+  static TextStyle bodyTxtStyle({
+    Color txtColor = MyColors.lighttxtClr,
+    double fontSize = 15,
+  }) {
     return GoogleFonts.montserrat(
       decoration: TextDecoration.none,
       color: txtColor,
