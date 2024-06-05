@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'constant_folder/utility_export.dart';
 import 'screens/login/ui/login_screen.dart';
-import 'screens/signup/ui/signup.dart';
+// import 'screens/signup/ui/signup.dart';
 
 void main() {
   runApp(const MyApp());
