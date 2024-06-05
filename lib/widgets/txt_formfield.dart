@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-
 import 'package:azan/constant_folder/utility_export.dart';
 
-class MyTextFormField extends StatelessWidget {
+class MyTextFormField extends StatefulWidget {
   final IconData leadingIcon;
   final bool obscureText;
   final String hintText;
@@ -17,6 +15,11 @@ class MyTextFormField extends StatelessWidget {
   });
 
   @override
+  State<MyTextFormField> createState() => _MyTextFormFieldState();
+}
+
+class _MyTextFormFieldState extends State<MyTextFormField> {
+  @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,24 +27,24 @@ class MyTextFormField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15.0, top: 15),
           child: Icon(
-            leadingIcon,
+            widget.leadingIcon,
             color: const Color.fromARGB(207, 101, 98, 98),
           ),
         ),
         Expanded(
           child: TextFormField(
-            obscureText: obscureText,
+            obscureText: widget.obscureText,
             obscuringCharacter: "*",
             style: Style.bodyTxtStyle(
-              txtColor: MyColors.textColor(),
+              txtColor: const Color.fromARGB(255, 145, 144, 144),
             ),
             textAlignVertical: TextAlignVertical.bottom,
             decoration: InputDecoration(
-              hintText: hintText,
+              hintText: widget.hintText,
               hintStyle: Style.bodyTxtStyle(
                 txtColor: const Color.fromRGBO(130, 126, 126, 0.58),
               ),
-              suffix: suffix
+              suffix: widget.suffix
                   ? GestureDetector(
                       onTap: () {},
                       child: Text(

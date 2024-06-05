@@ -9,7 +9,7 @@ void main() {
 }
 
 late Size mq;
-bool dark = true;
+bool dark = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,16 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Azan App',
-      initialRoute: "/login",
-      routes: {
-        '/login': (context) => const MyLoginScreen(),
-        '/signUp': (context) => const MySignUpScrren(),
-      },
+      // initialRoute: "/",
+      // routes: {
+      //   '/': (context) => const MyLoginScreen(),
+      //   '/signUp': (context) => const MySignUpScrren(),
+      // },
       themeMode: ThemeMode.system, // Use system theme mode
-      home: const MyLoginScreen(),
+      home: MyLoginScreen(),
     );
   }
 }

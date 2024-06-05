@@ -183,11 +183,25 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                   Row(
                     children: [
                       CircularButton(
-                        image: Image.asset('assets/images/google.png'),
+                        image: Image.asset(
+                          'assets/images/google.png',
+                          fit: BoxFit.fill,
+                          width: 70,
+                          height: 70,
+                        ),
                         onPressed: () {},
                       ),
+                      const SizedBox(
+                        width: 5,
+                        height: 0,
+                      ),
                       CircularButton(
-                        image: Image.asset('assets/images/facebook.png'),
+                        image: Image.asset(
+                          'assets/images/facebook.png',
+                          fit: BoxFit.fill,
+                          width: 70,
+                          height: 70,
+                        ),
                         onPressed: () {},
                       ),
                     ],
