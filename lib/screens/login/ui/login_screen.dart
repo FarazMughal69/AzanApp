@@ -1,4 +1,6 @@
+import 'package:azan/screens/login/bloc/login_bloc.dart';
 import 'package:azan/screens/signup/ui/signup.dart';
+import 'package:azan/widgets/app_icon.dart';
 import 'package:azan/widgets/circular_btn.dart';
 
 import '../../../constant_folder/utility_export.dart';
@@ -13,6 +15,9 @@ class MyLoginScreen extends StatefulWidget {
 }
 
 class _MyLoginScreenState extends State<MyLoginScreen> {
+  final FocusNode _emailfocusNode = FocusScopeNode();
+  final FocusNode _passwordfocusNode = FocusScopeNode();
+  final LoginBloc loginBloc = LoginBloc();
   @override
   Widget build(BuildContext context) {
     final double horizontalPadding = mq.width * 0.11;
@@ -27,13 +32,9 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
             size: 28,
           ),
           Switch(
-            value: dark,
+            value: dark, // default false
             onChanged: (bool value) {
-              setState(
-                () {
-                  dark = value;
-                },
-              );
+              loginBloc.add(ThemeChangeEvent(value: value));
             },
           ),
           RotationTransition(
@@ -59,21 +60,17 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
               height: 80,
               width: 80,
             ),
-            SizedBox(
-              height: mq.height * 0.11,
-              width: mq.width * 0.6,
-              child: Image.asset(
-                'assets/images/religion.png',
-                color: MyColors.textColor(),
-              ),
-            ),
+            // ignore: prefer_const_constructors
+            AppLogo(),
             // const Spacer(),
             const SizedBox(
               height: 80,
               width: 80,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,8 +95,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       'SignUp?',
                       style: Style.bodyTxtStyle(
                         txtColor: MyColors.textColor(
-                          darkmodeClr: MyColors.lightactionColor,
-                          lightModeClr: MyColors.darkactionColor,
+                          lightThemeClr: MyColors.lightactionColor,
+                          darkThemeClr: MyColors.darkactionColor,
                         ),
                       ),
                     ),
@@ -110,15 +107,18 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
             Form(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     MyTextFormField(
                       leadingIcon: Icons.alternate_email_rounded,
                       obscureText: false,
                       hintText: 'Email',
+                      node: _emailfocusNode,
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => _passwordfocusNode.nextFocus(),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     MyTextFormField(
@@ -126,6 +126,9 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       obscureText: true,
                       hintText: 'password',
                       suffix: true,
+                      node: _passwordfocusNode,
+                      textInputAction: TextInputAction.done,
+                      onEditingComplete: () => _passwordfocusNode.unfocus(),
                     ),
                   ],
                 ),
@@ -162,8 +165,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       "Forget Password?",
                       style: Style.bodyTxtStyle(
                         txtColor: MyColors.textColor(
-                          darkmodeClr: MyColors.lightactionColor,
-                          lightModeClr: MyColors.darkactionColor,
+                          lightThemeClr: MyColors.lightactionColor,
+                          darkThemeClr: MyColors.darkactionColor,
                         ),
                       ),
                     ),
@@ -212,14 +215,14 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                         icon: Icon(
                           Icons.arrow_forward,
                           color: MyColors.textColor(
-                            darkmodeClr: MyColors.lighttxtClr,
-                            lightModeClr: MyColors.darktxtClr,
+                            lightThemeClr: MyColors.lighttxtClr,
+                            darkThemeClr: MyColors.darktxtClr,
                           ),
                         ),
                         onPressed: () {},
                         bgClr: MyColors.textColor(
-                          darkmodeClr: MyColors.lightactionColor,
-                          lightModeClr: MyColors.darkactionColor,
+                          lightThemeClr: MyColors.lightactionColor,
+                          darkThemeClr: MyColors.darkactionColor,
                         ),
                       ),
                     ],

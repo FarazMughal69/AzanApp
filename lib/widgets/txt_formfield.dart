@@ -6,12 +6,18 @@ class MyTextFormField extends StatefulWidget {
   final bool obscureText;
   final String hintText;
   final bool suffix;
+  final FocusNode node;
+  final VoidCallback? onEditingComplete;
+  final TextInputAction? textInputAction;
   const MyTextFormField({
     super.key,
     required this.leadingIcon,
     required this.obscureText,
     required this.hintText,
     this.suffix = false,
+    required this.node,
+    this.onEditingComplete,
+    this.textInputAction,
   });
 
   @override
@@ -39,6 +45,9 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
               txtColor: const Color.fromARGB(255, 145, 144, 144),
             ),
             textAlignVertical: TextAlignVertical.bottom,
+            focusNode: widget.node,
+            onEditingComplete: widget.onEditingComplete,
+            textInputAction: widget.textInputAction,
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: Style.bodyTxtStyle(

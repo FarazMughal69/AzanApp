@@ -15,9 +15,9 @@ class MyColors {
   }
 
   static Color textColor({
-    Color darkmodeClr = darktxtClr,
-    Color lightModeClr = lighttxtClr,
+    Color lightThemeClr = darktxtClr,
+    Color darkThemeClr = lighttxtClr,
   }) {
-    return dark ? lightModeClr : darkmodeClr;
+    return dark ? darkThemeClr : lightThemeClr;
   }
 }

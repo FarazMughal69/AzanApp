@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-
 import '../constant_folder/utility_export.dart';
 import '../main.dart';
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
+class AppLogo extends StatelessWidget {
+  const AppLogo({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // print('build');
     return SizedBox(
       height: mq.height * 0.11,
       width: mq.width * 0.6,
