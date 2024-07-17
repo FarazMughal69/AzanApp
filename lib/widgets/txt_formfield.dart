@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:azan/constant_folder/utility_export.dart';
+import 'package:flutter/material.dart';
 
-class MyTextFormField extends StatefulWidget {
+import '../themeModes/themes.dart';
+
+class MyTextFormField extends StatelessWidget {
   final IconData leadingIcon;
   final bool obscureText;
   final String hintText;
@@ -21,11 +23,6 @@ class MyTextFormField extends StatefulWidget {
   });
 
   @override
-  State<MyTextFormField> createState() => _MyTextFormFieldState();
-}
-
-class _MyTextFormFieldState extends State<MyTextFormField> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,35 +30,37 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
         Padding(
           padding: const EdgeInsets.only(right: 15.0, top: 15),
           child: Icon(
-            widget.leadingIcon,
+            leadingIcon,
             color: const Color.fromARGB(207, 101, 98, 98),
           ),
         ),
         Expanded(
           child: TextFormField(
-            obscureText: widget.obscureText,
+            obscureText: obscureText,
             obscuringCharacter: "*",
-            style: Style.bodyTxtStyle(
-              txtColor: const Color.fromARGB(255, 145, 144, 144),
+            style: ThemeStyle.formFieldTxtStyle(
+              fontSize: 14,
+              txtColor: Theme.of(context).hintColor,
             ),
             textAlignVertical: TextAlignVertical.bottom,
-            focusNode: widget.node,
-            onEditingComplete: widget.onEditingComplete,
-            textInputAction: widget.textInputAction,
+            focusNode: node,
+            onEditingComplete: onEditingComplete,
+            textInputAction: textInputAction,
+            enableSuggestions: true,
             decoration: InputDecoration(
-              hintText: widget.hintText,
-              hintStyle: Style.bodyTxtStyle(
-                txtColor: const Color.fromRGBO(130, 126, 126, 0.58),
+              hintText: hintText,
+              hintStyle: ThemeStyle.formFieldTxtStyle(
+                txtColor: ThemeStyle.lightIndicatorColor,
+                fontSize: 14,
               ),
-              suffix: widget.suffix
+              suffix: suffix
                   ? GestureDetector(
                       onTap: () {},
-                      child: Text(
-                        'Show',
-                        style: Style.bodyTxtStyle(
-                          txtColor: const Color.fromARGB(148, 130, 126, 126),
-                        ),
-                      ),
+                      child: Text('Show',
+                          style: ThemeStyle.formFieldTxtStyle(
+                            txtColor: ThemeStyle.lightIndicatorColor,
+                            fontSize: 13,
+                          )),
                     )
                   : null,
             ),

@@ -1,10 +1,12 @@
-import 'package:azan/screens/login/bloc/login_bloc.dart';
 import 'package:azan/screens/signup/ui/signup.dart';
+import 'package:azan/themeModes/theme_bloc.dart';
 import 'package:azan/widgets/app_icon.dart';
 import 'package:azan/widgets/circular_btn.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../constant_folder/utility_export.dart';
 import '../../../main.dart';
+import '../../../themeModes/theme_modes.dart';
 import '../../../widgets/txt_formfield.dart';
 
 class MyLoginScreen extends StatefulWidget {
@@ -15,42 +17,65 @@ class MyLoginScreen extends StatefulWidget {
 }
 
 class _MyLoginScreenState extends State<MyLoginScreen> {
-  final FocusNode _emailfocusNode = FocusScopeNode();
-  final FocusNode _passwordfocusNode = FocusScopeNode();
-  final LoginBloc loginBloc = LoginBloc();
+  late FocusNode emailfocusNode;
+  final FocusNode passwordfocusNode = FocusNode();
+  final FocusScopeNode focusScopeNode = FocusScopeNode();
+  @override
+  void initState() {
+    emailfocusNode = FocusNode();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double horizontalPadding = mq.width * 0.11;
+
+    //
     bool rememberMe = false;
+
+    // final LoginBloc loginBloc = LoginBloc();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [
           Icon(
             Icons.wb_sunny_rounded,
-            color: MyColors.textColor(),
+            color: Theme.of(context).highlightColor,
             size: 28,
           ),
+          // Theme changing button
           Switch(
             value: dark, // default false
             onChanged: (bool value) {
-              loginBloc.add(ThemeChangeEvent(value: value));
+              if (!dark) {
+                dark = true;
+              } else {
+                dark = false;
+              }
+              // print(dark);
+              // focusScopeNode.unfocus();
+              context.read<ThemeBloc>().add(
+                    ToggleThemeEvent(
+                      newThemeMode: dark ? ThemeModes.dark : ThemeModes.light,
+                    ),
+                  );
             },
           ),
+
+          // rotate the moon icon
           RotationTransition(
             turns: const AlwaysStoppedAnimation(320 / 360),
             child: Icon(
               Icons.nightlight_round_outlined,
-              color: MyColors.textColor(),
+              color: Theme.of(context).highlightColor,
               size: 28,
             ),
           ),
           const SizedBox(
             width: 10,
-          )
+          ),
         ],
       ),
-      backgroundColor: MyColors.backgroundColor(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -60,6 +85,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
               height: 80,
               width: 80,
             ),
+
+            // Logo of the app at login screen widget
             // ignore: prefer_const_constructors
             AppLogo(),
             // const Spacer(),
@@ -76,9 +103,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 children: [
                   Text(
                     'SignIn',
-                    style: Style.headerTxtStyle(
-                      txtColor: MyColors.textColor(),
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   TextButton(
                     onPressed: () {
@@ -93,44 +118,47 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     },
                     child: Text(
                       'SignUp?',
-                      style: Style.bodyTxtStyle(
-                        txtColor: MyColors.textColor(
-                          lightThemeClr: MyColors.lightactionColor,
-                          darkThemeClr: MyColors.darkactionColor,
-                        ),
-                      ),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ],
               ),
             ),
-            Form(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    MyTextFormField(
-                      leadingIcon: Icons.alternate_email_rounded,
-                      obscureText: false,
-                      hintText: 'Email',
-                      node: _emailfocusNode,
-                      textInputAction: TextInputAction.next,
-                      onEditingComplete: () => _passwordfocusNode.nextFocus(),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    MyTextFormField(
-                      leadingIcon: Icons.password,
-                      obscureText: true,
-                      hintText: 'password',
-                      suffix: true,
-                      node: _passwordfocusNode,
-                      textInputAction: TextInputAction.done,
-                      onEditingComplete: () => _passwordfocusNode.unfocus(),
-                    ),
-                  ],
+
+            //Login form
+            FocusScope(
+              node: focusScopeNode,
+              child: Form(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      //Email Address TextFormField
+                      MyTextFormField(
+                        leadingIcon: Icons.alternate_email_rounded,
+                        obscureText: false,
+                        hintText: 'Email',
+                        node: emailfocusNode,
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: () => passwordfocusNode.nextFocus(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      // Password TextFormFormFields
+                      MyTextFormField(
+                        leadingIcon: Icons.password,
+                        obscureText: true,
+                        hintText: 'Password',
+                        suffix: true,
+                        node: passwordfocusNode,
+                        textInputAction: TextInputAction.done,
+                        onEditingComplete: () => passwordfocusNode.unfocus(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -139,36 +167,23 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                   horizontal: mq.width * 0.05, vertical: 20),
               child: Row(
                 children: [
+                  // Remember me check box
                   Checkbox(
                     value: rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        if (!rememberMe) {
-                          rememberMe = true;
-                        } else {
-                          rememberMe = false;
-                        }
-                      });
-                    },
+                    onChanged: (value) {},
                   ),
                   Text(
                     "Remember me?",
-                    style: Style.bodyTxtStyle(
-                      txtColor: MyColors.textColor(),
-                      fontSize: 13,
-                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const Spacer(),
+
+                  // forget password button to reset the password
                   TextButton(
                     onPressed: () {},
                     child: Text(
                       "Forget Password?",
-                      style: Style.bodyTxtStyle(
-                        txtColor: MyColors.textColor(
-                          lightThemeClr: MyColors.lightactionColor,
-                          darkThemeClr: MyColors.darkactionColor,
-                        ),
-                      ),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ],
@@ -185,6 +200,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 children: [
                   Row(
                     children: [
+                      // Continue with Google Login button
                       CircularButton(
                         image: Image.asset(
                           'assets/images/google.png',
@@ -198,6 +214,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                         width: 5,
                         height: 0,
                       ),
+
+                      //Continue with facebook Login button
                       CircularButton(
                         image: Image.asset(
                           'assets/images/facebook.png',
@@ -214,16 +232,14 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       CircularButton(
                         icon: Icon(
                           Icons.arrow_forward,
-                          color: MyColors.textColor(
-                            lightThemeClr: MyColors.lighttxtClr,
-                            darkThemeClr: MyColors.darktxtClr,
-                          ),
+                          color: Theme.of(context).cardColor,
                         ),
-                        onPressed: () {},
-                        bgClr: MyColors.textColor(
-                          lightThemeClr: MyColors.lightactionColor,
-                          darkThemeClr: MyColors.darkactionColor,
-                        ),
+                        onPressed: () {
+                          // passwordfocusNode.dispose();
+                          // emailfocusNode.dispose();
+                          // focusScopeNode.dispose();
+                        },
+                        bgClr: Theme.of(context).primaryColor,
                       ),
                     ],
                   ),

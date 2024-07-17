@@ -1,7 +1,7 @@
 import 'package:azan/screens/login/ui/login_screen.dart';
 import 'package:azan/widgets/txt_formfield.dart';
 
-import '../../../constant_folder/utility_export.dart';
+import 'package:flutter/material.dart';
 import '../../../main.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/circular_btn.dart';
@@ -18,7 +18,7 @@ class MySignUpScrren extends StatelessWidget {
     final FocusNode confirmPasswordFocusNode = FocusScopeNode();
     final double horizontalPadding = mq.width * 0.11;
     return Scaffold(
-      backgroundColor: MyColors.backgroundColor(),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -83,13 +83,7 @@ class MySignUpScrren extends StatelessWidget {
                   TextButton(
                     child: Text(
                       'Already User?',
-                      style: Style.bodyTxtStyle(
-                        fontSize: 18,
-                        txtColor: MyColors.textColor(
-                          lightThemeClr: MyColors.lightactionColor,
-                          darkThemeClr: MyColors.darkactionColor,
-                        ),
-                      ),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -107,15 +101,9 @@ class MySignUpScrren extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Icons.arrow_forward,
-                      color: MyColors.textColor(
-                        lightThemeClr: MyColors.lighttxtClr,
-                        darkThemeClr: MyColors.darktxtClr,
-                      ),
+                      color: Theme.of(context).cardColor,
                     ),
-                    bgClr: MyColors.textColor(
-                      lightThemeClr: MyColors.lightactionColor,
-                      darkThemeClr: MyColors.darkactionColor,
-                    ),
+                    bgClr: Theme.of(context).primaryColor,
                   )
                 ],
               ),

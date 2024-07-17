@@ -1,4 +1,4 @@
-import '../constant_folder/utility_export.dart';
+import 'package:flutter/material.dart';
 import '../main.dart';
 
 class AppLogo extends StatelessWidget {
@@ -12,7 +12,7 @@ class AppLogo extends StatelessWidget {
       width: mq.width * 0.6,
       child: Image.asset(
         'assets/images/religion.png',
-        color: MyColors.textColor(),
+        color: Theme.of(context).highlightColor,
       ),
     );
   }

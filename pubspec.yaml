@@ -30,10 +30,14 @@ environment:
 dependencies:
   bloc: ^8.1.4
   cupertino_icons: ^1.0.6
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
   google_fonts: ^6.2.1
   meta: ^1.11.0
+  shared_preferences: ^2.2.3
+  solar_icons: ^0.0.5
 
 dev_dependencies:
   flutter_lints: ^3.0.0
