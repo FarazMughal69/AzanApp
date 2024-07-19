@@ -1,51 +1,54 @@
+import 'package:azan/screens/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../themeModes/themes.dart';
 // import 'package:solar_icons/solar_icons.dart';
 
-class AzanContentWidget extends StatefulWidget {
-  final String prayerName;
-  final String prayerTime;
-  final IconData icon;
+class AzanContentWidget extends StatelessWidget {
+  final Prayers prayerObj;
   final int index;
   const AzanContentWidget({
     super.key,
-    required this.prayerName,
-    required this.prayerTime,
-    required this.icon,
+    required this.prayerObj,
     required this.index,
   });
 
   @override
-  State<AzanContentWidget> createState() => _AzanContentWidgetState();
-}
-
-class _AzanContentWidgetState extends State<AzanContentWidget> {
-  late int _activeIndex = 0;
-  @override
   Widget build(BuildContext context) {
-    return ListTile(
-        tileColor: widget.index == _activeIndex
-            ? Theme.of(context).primaryColor
-            : Colors.transparent,
+    late int activeIndex = 0;
+    return Container(
+      decoration: BoxDecoration(
+        color: index == activeIndex ? Theme.of(context).primaryColor : null,
+        borderRadius: activeIndex == 4
+            ? ThemeStyle.bottomBorderRadius
+            : activeIndex == 0
+                ? ThemeStyle.topBorderRadius
+                : null,
+      ),
+      child: ListTile(
+        // tileColor: index == activeIndex
+        //     ? Theme.of(context).primaryColor
+        //     : Color.fromARGB(183, 22, 156, 114),
+        // tileColor: Colors.amber,
         title: Text(
-          widget.prayerName,
-          style: Theme.of(context).textTheme.bodyMedium,
+          prayerObj.prayerName,
+          style: index == activeIndex
+              ? ThemeStyle.bodyMediumActiveIndexTextStyle
+              : Theme.of(context).textTheme.bodyMedium,
         ),
         subtitle: Text(
-          widget.prayerTime,
-          style: Theme.of(context).textTheme.bodySmall,
+          prayerObj.prayerTime,
+          style: index == activeIndex
+              ? ThemeStyle.bodySmallActiveIndexTextStyle
+              : Theme.of(context).textTheme.bodySmall,
         ),
         trailing: Icon(
-          widget.icon,
+          prayerObj.iconData,
           size: 29,
+          color: index == activeIndex ? Colors.white : null,
         ),
-        onTap: () => setState(() => _activeIndex = widget.index)
-        // onTap: () {
-        // setState(() {
-        //   for (int i = 0; i < _isSelected.length; i++) {
-        //     _isSelected[i] = false; // Deselect all first
-        //   }
-        //   _isSelected[index] = true; // Select the tapped tile
-        // });}
-        );
+        onTap: () {},
+      ),
+    );
   }
 }

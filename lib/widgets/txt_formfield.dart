@@ -50,7 +50,7 @@ class MyTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: ThemeStyle.formFieldTxtStyle(
-                txtColor: ThemeStyle.lightIndicatorColor,
+                txtColor: Theme.of(context).hintColor,
                 fontSize: 14,
               ),
               suffix: suffix
@@ -58,7 +58,7 @@ class MyTextFormField extends StatelessWidget {
                       onTap: () {},
                       child: Text('Show',
                           style: ThemeStyle.formFieldTxtStyle(
-                            txtColor: ThemeStyle.lightIndicatorColor,
+                            txtColor: Theme.of(context).hintColor,
                             fontSize: 13,
                           )),
                     )

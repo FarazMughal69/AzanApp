@@ -1,13 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+// import 'package:flutter/rendering.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 import 'package:azan/themeModes/themes.dart';
 
 import '../../../main.dart';
+import '../../../widgets/app_features_widget.dart';
 import '../../../widgets/azan_content_widget.dart';
-import '../example.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,6 +33,11 @@ List<Prayers> prayerList = const [
   Prayers(
     prayerName: 'Fajir',
     prayerTime: '04:30',
+    iconData: SolarIconsBold.moonFog,
+  ),
+  Prayers(
+    prayerName: 'Sunrise',
+    prayerTime: '05:30',
     iconData: SolarIconsBold.sunrise,
   ),
   Prayers(
@@ -44,20 +51,26 @@ List<Prayers> prayerList = const [
     iconData: SolarIconsBold.sun,
   ),
   Prayers(
+    prayerName: 'Sunset',
+    prayerTime: '07:27',
+    iconData: SolarIconsBold.sunset,
+  ),
+  Prayers(
     prayerName: 'Maghrib',
     prayerTime: '07:30',
-    iconData: SolarIconsBold.sunfog,
+    iconData: SolarIconsBold.cloudyMoon,
   ),
   Prayers(
     prayerName: 'Isha',
     prayerTime: '08:45',
-    iconData: SolarIconsBold.moon,
+    iconData: SolarIconsBold.moonStars,
   ),
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
   double _opacity = 1.0;
+  bool isFixed = false;
 
   // InitState
 
@@ -71,9 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _scrollListener() {
     double offset = _scrollController.offset;
     setState(() {
-      double height = mq.height * 0.30;
+      double height = mq.height * 0.17;
       height = height - 50;
-
+      // fixedContainermarginTop =
+      //     fixedContainermarginTop - (offset / fixedContainermarginTop);
+      // if (fixedContainermarginTop < 1) fixedContainermarginTop = 0;
       _opacity = 1 -
           (offset /
               height
@@ -92,33 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
   // Build Context
   @override
   Widget build(BuildContext context) {
-    int activeIndex = 4;
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Colors.blueGrey[50],
-
         body: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Positioned(
-              child: SizedBox(
-                // decoration: BoxDecoration(color: Colors.amber),
-                height: mq.height * 0.68,
-                width: mq.width,
-              ),
-            ),
-            Positioned(
-              width: mq.width,
-              height: mq.height * 0.30,
-              child: Opacity(
-                opacity: _opacity,
-                child: Image.asset(
-                  'assets/images/masjid.png',
-                  fit: BoxFit.fill,
-                  color: Theme.of(context).highlightColor,
-                ),
-              ),
-            ),
+            // This is background image of the Custom AppBar
             Positioned(
               width: mq.width,
               height: mq.height * 0.30,
@@ -126,97 +120,76 @@ class _HomeScreenState extends State<HomeScreen> {
                 opacity: _opacity,
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Theme.of(context).splashColor,
-                        Colors.transparent,
-                      ],
+                    image: DecorationImage(
+                      image: const AssetImage('assets/images/masjid.png'),
+                      fit: BoxFit.fill,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.6),
+                        BlendMode.darken,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
+
+            // List View from the center of the app to the bottom
             ListView(
               controller: _scrollController,
+              scrollDirection: Axis.vertical,
               children: <Widget>[
+                // Sized Box from top to the End of background image
                 SizedBox(
-                  height: mq.height * 0.26,
+                  height: mq.height * 0.17,
                 ),
+                // Next Prayer Time widget
                 Center(
                   child: Container(
-                    height: mq.height * 0.43,
+                    height: mq.height * 0.08,
                     width: mq.width * 0.8,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: dark
-                              ? ThemeStyle.darkUpperShahdowColor
-                              : ThemeStyle.lightUpperShahdowColor,
-                          spreadRadius: ThemeStyle.spreadRadius,
-                          blurRadius: ThemeStyle.blurRadius,
-                          offset: ThemeStyle.upperOffset,
-                        ),
-                        BoxShadow(
-                          color: dark
-                              ? ThemeStyle.darkLowerShahdowColor
-                              : ThemeStyle.lightLowerShahdowColor,
-                          spreadRadius: ThemeStyle.spreadRadius,
-                          blurRadius: ThemeStyle.blurRadius,
-                          offset: ThemeStyle.lowerOffset,
-                        ),
-                      ],
+                    decoration: ThemeStyle.decoration(
                       color: Theme.of(context).cardColor,
-                      shape: BoxShape.rectangle,
-                      borderRadius: ThemeStyle.borderRadius,
+                      reverseShadow: true,
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        'Asar',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      subtitle: Text(
+                        'Next Prayer In 01:23',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      trailing: Column(
+                        children: [
+                          const Icon(SolarIconsBold.mapPoint),
+                          Text(
+                            'Lahore',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: mq.height * 0.02,
+                ),
+                // Prayer Time and other content of the prayer
+                Center(
+                  child: Container(
+                    height: mq.height * 0.416,
+                    width: mq.width * 0.8,
+                    decoration: ThemeStyle.decoration(
+                      color: Theme.of(context).cardColor,
                     ),
                     child: ListView.builder(
                       itemCount: prayerList.length,
                       itemBuilder: (context, index) {
                         final prayer = prayerList[index];
-                        // return AzanContentWidget(
-                        //   prayerName: prayer.prayerName,
-                        //   prayerTime: prayer.prayerTime,
-                        //   icon: prayer.iconData,
-                        //   index: index,
-                        // );
-
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: index == activeIndex
-                                ? Theme.of(context).primaryColor
-                                : null,
-                          ),
-                          child: ListTile(
-                              // tileColor: index == activeIndex
-                              //     ? Theme.of(context).primaryColor
-                              //     : Color.fromARGB(183, 22, 156, 114),
-                              // tileColor: Colors.amber,
-                              title: Text(
-                                prayer.prayerName,
-                                style: index == activeIndex
-                                    ? ThemeStyle.bodyMediumActiveIndexTextStyle
-                                    : Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              subtitle: Text(
-                                prayer.prayerTime,
-                                style: index == activeIndex
-                                    ? ThemeStyle.bodySmallActiveIndexTextStyle
-                                    : Theme.of(context).textTheme.bodySmall,
-                              ),
-                              trailing: Icon(
-                                prayer.iconData,
-                                size: 29,
-                                color:
-                                    index == activeIndex ? Colors.white : null,
-                              ),
-                              onTap: () {
-                                setState(
-                                  () => activeIndex = index,
-                                );
-                                print('$index');
-                              }),
+                        return AzanContentWidget(
+                          index: index,
+                          prayerObj: prayer,
                         );
                       },
                     ),
@@ -225,85 +198,110 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
-                  width: mq.width,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 249, 216, 116),
-                  ),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ContainerBehindExample()),
-                        );
-                      },
-                      child: const Text('Example')),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: mq.width,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 249, 216, 116),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: mq.width,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 249, 216, 116),
+                Center(
+                  child: SizedBox(
+                    width: mq.width * 0.8,
+                    height: mq.height * 0.2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AdditionalFeatureWidget(
+                          imageIcon: Image.asset('assets/images/pray.png'),
+                          title: 'Prayer Tracking',
+                        ),
+                        AdditionalFeatureWidget(
+                          imageIcon: Image.asset(
+                            'assets/images/tasbih.png',
+                          ),
+                          title: 'Tasbih Counter',
+                        ),
+                        AdditionalFeatureWidget(
+                          imageIcon: Image.asset(
+                            'assets/images/open-hands.png',
+                          ),
+                          title: 'Namaz Attendence',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: mq.width,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 249, 216, 116),
+                Center(
+                  child: SizedBox(
+                    width: mq.width * 0.8,
+                    height: mq.height * 0.2,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AdditionalFeatureWidget(
+                          iconData: SolarIconsBold.userHands,
+                          title: 'Namaz History',
+                        ),
+                        AdditionalFeatureWidget(
+                          iconData: SolarIconsBold.userHands,
+                          title: 'Dua',
+                        ),
+                        AdditionalFeatureWidget(
+                          iconData: SolarIconsBold.userHands,
+                          title: 'Hadith of The Day',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: mq.width,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(188, 25, 21, 8),
-                  ),
-                ),
-                Container(
-                  width: mq.width,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(187, 121, 105, 216),
-                  ),
-                ),
-                Container(
-                  width: mq.width,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(187, 158, 152, 135),
-                  ),
-                ),
-                Container(
-                  width: mq.width,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(187, 101, 85, 34),
-                  ),
-                ),
+                SizedBox(
+                  height: mq.height * 0.029,
+                )
               ],
-            )
+            ),
+            // Custom App Bar at the top of the screen
+            Positioned(
+              child: Container(
+                height: mq.height * 0.091,
+                width: mq.width,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(72, 0, 0, 0),
+                ),
+                child: ListTile(
+                  title: Text(
+                    'Today',
+                    style: ThemeStyle.titleLargeActiveIndexTextStyle,
+                  ),
+                  subtitle: Text(
+                    '11 Muharram 1446 AH',
+                    style: ThemeStyle.bodySmallActiveIndexTextStyle,
+                  ),
+                  trailing: GestureDetector(
+                    onTap: () {},
+                    child: const Icon(
+                      Icons.settings_outlined,
+                      size: 26,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        bottomSheet: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          // unselectedItemColor: Colors.black87,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(
+                  SolarIconsBold.home,
+                ),
+                label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  SolarIconsBold.handHeart,
+                ),
+                label: 'Charity'),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  SolarIconsBold.book,
+                ),
+                label: 'Learn')
           ],
         ),
       ),

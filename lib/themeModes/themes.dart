@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../main.dart';
+
 base class ThemeStyle {
   //TextFormField Text Style
   static TextStyle formFieldTxtStyle({
@@ -15,8 +17,53 @@ base class ThemeStyle {
     );
   }
 
+  // Container Box decoration
+  static BoxDecoration decoration({
+    Color color = Colors.transparent,
+    BorderRadius borderRadius = ThemeStyle.borderRadius,
+    double spreadRadius = ThemeStyle.spreadRadius,
+    double blurRadius = ThemeStyle.blurRadius,
+    Offset upperOffset = ThemeStyle.upperOffset,
+    Offset lowerOffset = ThemeStyle.lowerOffset,
+    bool boxShahdow = true,
+    bool isBorderRadius = true,
+    bool reverseShadow = false,
+  }) {
+    return BoxDecoration(
+      boxShadow: boxShahdow
+          ? [
+              //Upper Shadow of the Container
+              BoxShadow(
+                color: reverseShadow
+                    ? const Color.fromARGB(182, 0, 0, 0)
+                    : dark
+                        ? ThemeStyle.darkUpperShahdowColor
+                        : ThemeStyle.lightUpperShahdowColor,
+                spreadRadius: ThemeStyle.spreadRadius,
+                blurRadius: ThemeStyle.blurRadius,
+                offset: ThemeStyle.upperOffset,
+              ),
+              //Lower Shadow of the Container
+              BoxShadow(
+                color: reverseShadow
+                    ? ThemeStyle.darkLowerShahdowColor
+                    : dark
+                        ? ThemeStyle.darkLowerShahdowColor
+                        : ThemeStyle.lightLowerShahdowColor,
+                spreadRadius: ThemeStyle.spreadRadius,
+                blurRadius: ThemeStyle.blurRadius,
+                offset: ThemeStyle.lowerOffset,
+              )
+            ]
+          : [],
+      color: color,
+      shape: BoxShape.rectangle,
+      borderRadius: isBorderRadius ? borderRadius : null,
+    );
+  }
+
   // Active Index or Active Tile Text Colors //
-  static TextStyle bodyMediumActiveIndexTextStyle = GoogleFonts.lato(
+  static TextStyle bodyMediumActiveIndexTextStyle = GoogleFonts.montserrat(
     decoration: TextDecoration.none,
     color: ThemeStyle.darkHighLightColor,
     fontSize: 17,
@@ -30,6 +77,13 @@ base class ThemeStyle {
     fontWeight: FontWeight.normal,
   );
 
+  static TextStyle titleLargeActiveIndexTextStyle = GoogleFonts.montserrat(
+    decoration: TextDecoration.none,
+    color: ThemeStyle.darkHighLightColor,
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+  );
+
   //Upper box shahdow
   static const double blurRadius = 4.0;
   static const double spreadRadius = 2.0;
@@ -41,7 +95,16 @@ base class ThemeStyle {
   static const Offset lowerOffset = Offset(4.0, 6.0);
 
   // Border Radius
-  static BorderRadius borderRadius = BorderRadius.circular(12.0);
+  static const BorderRadius borderRadius =
+      BorderRadius.all(Radius.circular(12));
+  static const BorderRadius topBorderRadius = BorderRadius.only(
+    topLeft: Radius.circular(12),
+    topRight: Radius.circular(12),
+  );
+  static const BorderRadius bottomBorderRadius = BorderRadius.only(
+    bottomLeft: Radius.circular(12),
+    bottomRight: Radius.circular(12),
+  );
 
   // Light Theme Colors
   static const lightScaffoldBackgroundColor =
@@ -53,7 +116,7 @@ base class ThemeStyle {
   static const lightOnErrorColor = Color.fromARGB(255, 244, 67, 54);
   static const lightCardColor = Color.fromARGB(255, 255, 255, 255);
   static const lightIconColor = Color.fromARGB(207, 101, 98, 98);
-  static const lightIndicatorColor = Color.fromARGB(255, 145, 144, 144);
+  static const lightTextColor = Color.fromARGB(255, 145, 144, 144);
   static const lightUpperShahdowColor = Color.fromARGB(213, 208, 207, 207);
   static const lightLowerShahdowColor = Color.fromARGB(68, 255, 255, 255);
 
@@ -66,7 +129,7 @@ base class ThemeStyle {
   static const darkOnErrorColor = Color.fromARGB(255, 244, 67, 54);
   static const darkCardColor = Color.fromARGB(255, 0, 0, 0);
   static const darkIconColor = Color.fromARGB(207, 101, 98, 98);
-  static const darkIndicatorColor = Color.fromARGB(255, 145, 144, 144);
+  static const darkTextColor = Color.fromARGB(255, 145, 144, 144);
   static const darkUpperShahdowColor = Color.fromARGB(31, 202, 200, 200);
   static const darkLowerShahdowColor = Color.fromARGB(124, 0, 0, 0);
 }
@@ -77,17 +140,20 @@ final ThemeData lightTheme = ThemeData(
   primaryColor: ThemeStyle.lightPrimaryColor,
   focusColor: ThemeStyle.lightFocusColor,
   highlightColor: ThemeStyle.lightHighLightColor,
-  hintColor: ThemeStyle.lightIndicatorColor,
+  hintColor: ThemeStyle.lightTextColor,
   secondaryHeaderColor: ThemeStyle.lightSecondaryColor,
   cardColor: const Color.fromARGB(255, 236, 239, 241),
   indicatorColor: ThemeStyle.lightOnErrorColor,
   splashColor: const Color.fromARGB(255, 236, 239, 241),
-  iconTheme: const IconThemeData(color: ThemeStyle.lightIconColor, size: 18),
+  iconTheme: const IconThemeData(
+    color: ThemeStyle.lightIconColor,
+    size: 18,
+  ),
   textTheme: TextTheme(
     titleLarge: GoogleFonts.montserrat(
       decoration: TextDecoration.none,
       color: ThemeStyle.lightHighLightColor,
-      fontSize: 20,
+      fontSize: 23,
       fontWeight: FontWeight.bold,
     ),
     displaySmall: GoogleFonts.montserrat(
@@ -104,7 +170,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     bodySmall: GoogleFonts.montserrat(
       decoration: TextDecoration.none,
-      color: ThemeStyle.lightIndicatorColor,
+      color: ThemeStyle.lightTextColor,
       fontSize: 14,
       fontWeight: FontWeight.normal,
     ),
@@ -117,7 +183,7 @@ final ThemeData darkTheme = ThemeData(
   primaryColor: ThemeStyle.darkFocusColor,
   focusColor: ThemeStyle.darkPrimaryColor,
   highlightColor: ThemeStyle.darkHighLightColor,
-  hintColor: ThemeStyle.darkIndicatorColor,
+  hintColor: ThemeStyle.darkTextColor,
   secondaryHeaderColor: ThemeStyle.darkSecondaryColor,
   cardColor: ThemeStyle.darkScaffoldBackgroundColor,
   indicatorColor: ThemeStyle.lightOnErrorColor,
@@ -150,7 +216,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     bodySmall: GoogleFonts.montserrat(
       decoration: TextDecoration.none,
-      color: ThemeStyle.darkIndicatorColor,
+      color: ThemeStyle.darkTextColor,
       fontSize: 14,
       fontWeight: FontWeight.normal,
     ),
