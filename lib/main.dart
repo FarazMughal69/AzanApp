@@ -2,6 +2,7 @@ import 'package:azan/themeModes/theme_modes.dart';
 import 'package:azan/themeModes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'screens/home/bloc/home_bloc.dart';
 import 'screens/home/ui/home_screen.dart';
 // import 'screens/login/ui/login_screen.dart';
 import 'themeModes/theme_bloc.dart';
@@ -23,8 +24,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     // FocusScope.of(context).requestFocus(emailfocusNode);
-    return BlocProvider(
-      create: (context) => ThemeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
+      ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         buildWhen: (previous, current) => current is IntialThemeState,
         builder: (context, state) {
@@ -43,7 +51,7 @@ class MyApp extends StatelessWidget {
             //MohanadOO Prayer Time API (GitHub): https://github.com/topics/prayer-times (This one uses the Aladhan library)
 
             final brightness = MediaQuery.platformBrightnessOf(context);
-            //print("**************** $brightness *****************");
+            //print("**************** // *****************");
             final themeMode = state.themeMode;
             ThemeData? currentTheme;
             switch (themeMode) {
@@ -73,7 +81,7 @@ class MyApp extends StatelessWidget {
               // },
               theme: currentTheme,
               // home: const MyLoginScreen(),
-              home: const HomeScreen(),
+              home: HomeScreen(),
             );
           }
           return const MaterialApp(

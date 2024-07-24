@@ -24,11 +24,17 @@ class AdditionalFeatureWidget extends StatelessWidget {
           decoration: ThemeStyle.decoration(
             color: Theme.of(context).cardColor,
           ),
-          child: imageIcon ??
-              Icon(
-                iconData,
-                size: 30,
-              ),
+          child: Center(
+            child: SizedBox(
+              height: mq.height * 0.07,
+              width: mq.width * 0.16,
+              child: imageIcon ??
+                  Icon(
+                    iconData,
+                    size: 35,
+                  ),
+            ),
+          ),
         ),
         SizedBox(
           height: mq.height * 0.02,

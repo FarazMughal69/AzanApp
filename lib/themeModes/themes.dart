@@ -115,7 +115,7 @@ base class ThemeStyle {
   static const lightFocusColor = Color.fromARGB(255, 103, 58, 183);
   static const lightOnErrorColor = Color.fromARGB(255, 244, 67, 54);
   static const lightCardColor = Color.fromARGB(255, 255, 255, 255);
-  static const lightIconColor = Color.fromARGB(207, 101, 98, 98);
+  static const lightIconColor = Color.fromARGB(255, 66, 66, 66);
   static const lightTextColor = Color.fromARGB(255, 145, 144, 144);
   static const lightUpperShahdowColor = Color.fromARGB(213, 208, 207, 207);
   static const lightLowerShahdowColor = Color.fromARGB(68, 255, 255, 255);
@@ -128,12 +128,13 @@ base class ThemeStyle {
   static const darkFocusColor = Color.fromARGB(255, 120, 48, 243);
   static const darkOnErrorColor = Color.fromARGB(255, 244, 67, 54);
   static const darkCardColor = Color.fromARGB(255, 0, 0, 0);
-  static const darkIconColor = Color.fromARGB(207, 101, 98, 98);
+  static const darkIconColor = Color.fromARGB(222, 238, 238, 238);
   static const darkTextColor = Color.fromARGB(255, 145, 144, 144);
   static const darkUpperShahdowColor = Color.fromARGB(31, 202, 200, 200);
   static const darkLowerShahdowColor = Color.fromARGB(124, 0, 0, 0);
 }
 
+//Light Theme Colors
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: ThemeStyle.lightScaffoldBackgroundColor,
@@ -177,6 +178,7 @@ final ThemeData lightTheme = ThemeData(
   ),
 );
 
+//Dark Theme Colors
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: ThemeStyle.darkScaffoldBackgroundColor,
@@ -188,7 +190,10 @@ final ThemeData darkTheme = ThemeData(
   cardColor: ThemeStyle.darkScaffoldBackgroundColor,
   indicatorColor: ThemeStyle.lightOnErrorColor,
   splashColor: ThemeStyle.darkScaffoldBackgroundColor,
-  iconTheme: const IconThemeData(color: ThemeStyle.darkIconColor, size: 18),
+  iconTheme: const IconThemeData(
+    color: ThemeStyle.darkIconColor,
+    size: 18,
+  ),
   textTheme: TextTheme(
     titleMedium: GoogleFonts.montserrat(
       decoration: TextDecoration.none,

@@ -26,10 +26,6 @@ class AzanContentWidget extends StatelessWidget {
                 : null,
       ),
       child: ListTile(
-        // tileColor: index == activeIndex
-        //     ? Theme.of(context).primaryColor
-        //     : Color.fromARGB(183, 22, 156, 114),
-        // tileColor: Colors.amber,
         title: Text(
           prayerObj.prayerName,
           style: index == activeIndex
