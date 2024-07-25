@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeBloc bloc = BlocProvider.of<HomeBloc>(context);
     context.read<HomeBloc>().add(const HomeInitialEvent());
+    print('HomeInitialEvent is triggered');
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -34,7 +35,12 @@ class HomeScreen extends StatelessWidget {
               child: BlocListener<HomeBloc, HomeState>(
                 bloc: bloc,
                 listener: (context, state) {
+                  if (state is HomeInitialState) {
+                    print('HomeInitialState is listened by the listener');
+                    context.read<HomeBloc>().add(const ScrollEvent());
+                  }
                   if (state is HomeScrollingState) {
+                    print('HomeScrollingState is listened by the listener');
                     double offset;
                     _scrollController.addListener(() {
                       offset = _scrollController.offset;

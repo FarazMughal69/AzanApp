@@ -9,7 +9,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeInitialState()) {
     on<HomeInitialEvent>((event, emit) {
-      add(const ScrollEvent());
+      emit(const HomeInitialState());
     });
     on<ScrollEvent>(scrollEvent);
   }
