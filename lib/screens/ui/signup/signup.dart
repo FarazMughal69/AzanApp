@@ -1,4 +1,4 @@
-import 'package:azan/screens/login/ui/login_screen.dart';
+import 'package:azan/screens/ui/login/login_screen.dart';
 import 'package:azan/widgets/txt_formfield.dart';
 
 import 'package:flutter/material.dart';

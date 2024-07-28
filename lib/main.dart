@@ -2,8 +2,8 @@ import 'package:azan/themeModes/theme_modes.dart';
 import 'package:azan/themeModes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'screens/home/bloc/home_bloc.dart';
-import 'screens/home/ui/home_screen.dart';
+import 'screens/blocs/home/home_bloc.dart';
+import 'screens/ui/home/home_screen.dart';
 // import 'screens/login/ui/login_screen.dart';
 import 'themeModes/theme_bloc.dart';
 // import 'screens/signup/ui/signup.dart';
@@ -36,7 +36,7 @@ class ThemeHandler extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       buildWhen: (previous, current) => current is ToggleThemeEvent,
       builder: (contexr, state) {
-        print('ThemeHandler rebuilds');
+        // print('ThemeHandler rebuilds');
         final brightness = MediaQuery.platformBrightnessOf(context);
         // Default the is the User Preference Theme But when user change to any dark or light then
         //Toggle theme event trigger then theme mode is either light or dark then according
@@ -61,12 +61,12 @@ class ThemeHandler extends StatelessWidget {
               if (brightness == Brightness.light) {
                 currentTheme = lightTheme;
                 dark = false;
-                print('Theme Mode light defualt');
+                // print('Theme Mode light defualt');
               }
               if (brightness == Brightness.dark) {
                 currentTheme = darkTheme;
                 dark = true;
-                print('Theme Mode dark default');
+                // print('Theme Mode dark default');
               }
           }
         }

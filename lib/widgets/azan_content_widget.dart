@@ -1,4 +1,4 @@
-import 'package:azan/screens/home/ui/home_screen.dart';
+import 'package:azan/screens/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../themeModes/themes.dart';

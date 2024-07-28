@@ -7,7 +7,7 @@ import 'package:azan/themeModes/themes.dart';
 import '../../../main.dart';
 import '../../../widgets/app_features_widget.dart';
 import '../../../widgets/azan_content_widget.dart';
-import '../bloc/home_bloc.dart';
+import '../../blocs/home/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key})

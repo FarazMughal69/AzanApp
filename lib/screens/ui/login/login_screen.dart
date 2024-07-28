@@ -1,4 +1,4 @@
-import 'package:azan/screens/signup/ui/signup.dart';
+import 'package:azan/screens/ui/signup/signup.dart';
 import 'package:azan/themeModes/theme_bloc.dart';
 import 'package:azan/widgets/app_icon.dart';
 import 'package:azan/widgets/circular_btn.dart';
