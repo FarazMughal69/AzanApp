@@ -1,7 +1,7 @@
-import 'package:azan/screens/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../themeModes/themes.dart';
+import '../../models/prayermodel.dart';
+import '../../themeModes/themes.dart';
 // import 'package:solar_icons/solar_icons.dart';
 
 class AzanContentWidget extends StatelessWidget {

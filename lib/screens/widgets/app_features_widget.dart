@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
-import '../themeModes/themes.dart';
+import '../../main.dart';
+import '../../themeModes/themes.dart';
 
 class AdditionalFeatureWidget extends StatelessWidget {
   final Image? imageIcon;

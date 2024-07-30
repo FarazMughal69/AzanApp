@@ -1,10 +1,10 @@
 import 'package:azan/screens/ui/login/login_screen.dart';
-import 'package:azan/widgets/txt_formfield.dart';
+import 'package:azan/screens/widgets/txt_formfield.dart';
 
 import 'package:flutter/material.dart';
 import '../../../main.dart';
-import '../../../widgets/app_icon.dart';
-import '../../../widgets/circular_btn.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/circular_btn.dart';
 // import '../../login/ui/login_screen.dart';
 
 class MySignUpScrren extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:azan/themeModes/theme_modes.dart';
 import 'package:azan/themeModes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'screens/blocs/home/home_bloc.dart';
+import 'blocs/home/home_bloc.dart';
 import 'screens/ui/home/home_screen.dart';
 // import 'screens/login/ui/login_screen.dart';
 import 'themeModes/theme_bloc.dart';

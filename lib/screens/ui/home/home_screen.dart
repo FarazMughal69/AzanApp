@@ -5,9 +5,10 @@ import 'package:solar_icons/solar_icons.dart';
 import 'package:azan/themeModes/themes.dart';
 
 import '../../../main.dart';
-import '../../../widgets/app_features_widget.dart';
-import '../../../widgets/azan_content_widget.dart';
-import '../../blocs/home/home_bloc.dart';
+import '../../../utility/utility.dart';
+import '../../widgets/app_features_widget.dart';
+import '../../widgets/azan_content_widget.dart';
+import '../../../blocs/home/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key})
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeBloc bloc = BlocProvider.of<HomeBloc>(context);
     context.read<HomeBloc>().add(const HomeInitialEvent());
-    print('HomeInitialEvent is triggered');
+    // print('HomeInitialEvent is triggered');
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -36,11 +37,11 @@ class HomeScreen extends StatelessWidget {
                 bloc: bloc,
                 listener: (context, state) {
                   if (state is HomeInitialState) {
-                    print('HomeInitialState is listened by the listener');
+                    // print('HomeInitialState is listened by the listener');
                     context.read<HomeBloc>().add(const ScrollEvent());
                   }
                   if (state is HomeScrollingState) {
-                    print('HomeScrollingState is listened by the listener');
+                    // print('HomeScrollingState is listened by the listener');
                     double offset;
                     _scrollController.addListener(() {
                       offset = _scrollController.offset;
@@ -129,13 +130,34 @@ class HomeScreen extends StatelessWidget {
                     decoration: ThemeStyle.decoration(
                       color: Theme.of(context).cardColor,
                     ),
-                    child: ListView.builder(
-                      itemCount: prayerList.length,
-                      itemBuilder: (context, index) {
-                        final prayer = prayerList[index];
-                        return AzanContentWidget(
-                          index: index,
-                          prayerObj: prayer,
+                    child: BlocBuilder<HomeBloc, HomeState>(
+                      bloc: bloc,
+                      builder: (context, state) {
+                        if (state is HomeLoadingState ||
+                            state is HomeInitialState) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state is HomeLoadedState) {
+                          // ignore: unused_local_variable
+                          var timings = Utility.extractTodayPrayerList(
+                              state.prayerTimings.data);
+                          return ListView.builder(
+                            itemCount:
+                                Utility.getPrayerNameWithTime(timings).length,
+                            itemBuilder: (context, index) {
+                              final prayer =
+                                  Utility.getPrayerNameWithTime(timings)[index];
+                              return AzanContentWidget(
+                                index: index,
+                                prayerObj: prayer,
+                              );
+                            },
+                          );
+                        }
+                        return const Center(
+                          child: Text('Error'),
                         );
                       },
                     ),
@@ -275,51 +297,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Prayers {
-  final String prayerName;
-  final String prayerTime;
-  final IconData iconData;
-  const Prayers({
-    required this.prayerName,
-    required this.prayerTime,
-    required this.iconData,
-  });
-}
-
-List<Prayers> prayerList = const [
-  Prayers(
-    prayerName: 'Fajir',
-    prayerTime: '04:30',
-    iconData: SolarIconsBold.moonFog,
-  ),
-  Prayers(
-    prayerName: 'Sunrise',
-    prayerTime: '05:30',
-    iconData: SolarIconsBold.sunrise,
-  ),
-  Prayers(
-    prayerName: 'Dhuhar',
-    prayerTime: '01:30',
-    iconData: SolarIconsBold.sun2,
-  ),
-  Prayers(
-    prayerName: 'Asar',
-    prayerTime: '04:30',
-    iconData: SolarIconsBold.sun,
-  ),
-  Prayers(
-    prayerName: 'Sunset',
-    prayerTime: '07:27',
-    iconData: SolarIconsBold.sunset,
-  ),
-  Prayers(
-    prayerName: 'Maghrib',
-    prayerTime: '07:30',
-    iconData: SolarIconsBold.cloudyMoon,
-  ),
-  Prayers(
-    prayerName: 'Isha',
-    prayerTime: '08:45',
-    iconData: SolarIconsBold.moonStars,
-  ),
-];
+// 

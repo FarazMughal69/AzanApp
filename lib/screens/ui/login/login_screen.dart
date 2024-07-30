@@ -1,13 +1,13 @@
 import 'package:azan/screens/ui/signup/signup.dart';
 import 'package:azan/themeModes/theme_bloc.dart';
-import 'package:azan/widgets/app_icon.dart';
-import 'package:azan/widgets/circular_btn.dart';
+import 'package:azan/screens/widgets/app_icon.dart';
+import 'package:azan/screens/widgets/circular_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main.dart';
 import '../../../themeModes/theme_modes.dart';
-import '../../../widgets/txt_formfield.dart';
+import '../../widgets/txt_formfield.dart';
 
 class MyLoginScreen extends StatefulWidget {
   const MyLoginScreen({super.key});
