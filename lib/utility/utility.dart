@@ -1,71 +1,97 @@
-import 'package:azan/models/prayermodel.dart';
+import 'package:azan/models/prayerdatamodels.dart';
 import 'package:solar_icons/solar_icons.dart';
 
-import '../extensions/readable_date.dart';
+import '../extensions/extensions.dart';
 
 class Utility {
-  static Timings extractTodayPrayerList(List<dynamic>? data) {
-    Timings todayPrayers = Timings();
+  static List<PrayersData> getPrayersData(List<dynamic>? data) {
+    try {
+      List<PrayersData> prayersDataLst = [];
+      if (data != null) {
+        for (var element in data) {
+          var p = PrayersData.fromJson(element);
+          prayersDataLst.add(p);
+        }
+      }
+      return prayersDataLst;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static PrayersData extractTodayPrayerData(List<PrayersData> data) {
+    PrayersData pd = PrayersData();
     DateTime now = DateTime.now();
-    for (var item in data!) {
-      var date = item['date'];
-      var readAble = date['readable'].toString().toUpperCase();
+    // getPrayersData(data);
+    for (var item in data) {
+      var date = item.date;
+      var readAble = date!.readable.toString().toUpperCase();
       var todaydate = StringExtensions.readAbleDate(now);
       if (readAble == todaydate) {
-        todayPrayers = Timings.fromJson(item['timings']);
-        getPrayerNameWithTime(todayPrayers);
-        return todayPrayers;
+        pd = PrayersData(
+            timings: item.timings, date: item.date, meta: item.meta);
+        return pd;
 
         //Add data in a list and save that list in the
       }
     }
-    return todayPrayers;
+    return pd;
   }
 
-  static List<Prayers> getPrayerNameWithTime(Timings timings) {
+  // static List<PrayersData> getPrayersData(List<dynamic>? data) {
+  //   List<PrayersData> pdLst = List.empty();
+  //   for (var item in data!) {
+  //     var p = PrayersData.fromJson(item);
+  //     pdLst.add(p);
+  //   }
+  //   return pdLst;
+  // }
+
+  static (List<Prayers>, Date) getPrayerNameWithDateTime(PrayersData pd) {
+    Date date = pd.date!;
     List<Prayers> pLst = <Prayers>[
       Prayers(
         prayerName: "Fajr",
-        prayerTime: timings.fajr!,
+        prayerTime: pd.timings!.fajr!,
         iconData: SolarIconsBold.moonFog,
       ),
       Prayers(
         prayerName: "Sunrise",
-        prayerTime: timings.sunrise!,
+        prayerTime: pd.timings!.sunrise!,
         iconData: SolarIconsBold.sunrise,
       ),
       Prayers(
         prayerName: "Dhuhr",
-        prayerTime: timings.dhuhr!,
+        prayerTime: pd.timings!.dhuhr!,
         iconData: SolarIconsBold.sun2,
       ),
       Prayers(
         prayerName: "Asr",
-        prayerTime: timings.asr!,
+        prayerTime: pd.timings!.asr!,
         iconData: SolarIconsBold.sun,
       ),
       Prayers(
         prayerName: "Sunset",
-        prayerTime: timings.sunset!,
+        prayerTime: pd.timings!.sunset!,
         iconData: SolarIconsBold.sunset,
       ),
       Prayers(
         prayerName: "Maghrib",
-        prayerTime: timings.maghrib!,
+        prayerTime: pd.timings!.maghrib!,
         iconData: SolarIconsBold.cloudyMoon,
       ),
       Prayers(
         prayerName: "Isha",
-        prayerTime: timings.isha!,
+        prayerTime: pd.timings!.isha!,
         iconData: SolarIconsBold.moon,
       ),
       Prayers(
         prayerName: "Imsak",
-        prayerTime: timings.midnight!,
+        prayerTime: pd.timings!.midnight!,
         iconData: SolarIconsBold.moonStars,
       ),
     ];
-    return pLst;
+    return (pLst, date);
   }
 
   // List<Prayers> prayerList = const [

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../enums/months.dart';
 
 extension StringExtensions on DateTime {
@@ -21,4 +23,12 @@ String monthNumberToAbbreviation(int monthNumber) {
     throw ArgumentError('Invalid month number');
   }
   return Months.values[monthNumber - 1].toAbbreviation();
+}
+
+extension StringToDateTime on DateTime {
+  static DateTime convertStringToDateTime(String sDateTime) {
+    DateFormat dateFormat = DateFormat("dd-MM-yyyy HH:mm:ss.SSS");
+    DateTime dateTime = dateFormat.parse(sDateTime);
+    return dateTime;
+  }
 }

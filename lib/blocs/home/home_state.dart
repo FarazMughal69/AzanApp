@@ -15,9 +15,17 @@ class HomeLoadingState extends HomeState {
 }
 
 class HomeLoadedState extends HomeState {
-  final PrayerTimesResponse prayerTimings;
+  final List<Prayers> prayerTimingsList;
+  final int index;
+  final String hijriDate;
+  final String nextPrayer;
 
-  const HomeLoadedState({required this.prayerTimings});
+  const HomeLoadedState({
+    required this.prayerTimingsList,
+    required this.index,
+    required this.hijriDate,
+    required this.nextPrayer,
+  });
 }
 
 class HomeErrorState extends HomeState {

@@ -5,9 +5,9 @@ class PrayerTimesResponse {
   String? error;
 
   PrayerTimesResponse({
-    this.code,
-    this.status,
-    this.data,
+    required this.code,
+    required this.status,
+    required this.data,
   });
 
   PrayerTimesResponse.fromJson(Map<String, dynamic> json) {
@@ -94,6 +94,24 @@ class Timings {
     isha = json['Isha'];
     imsak = json['Imsak'];
     midnight = json['Midnight'];
+  }
+
+  // factory Timings.fromTModel(){
+  //   return Timings(
+  //     fajr: fajr,
+  //   ) ;
+  // }
+
+  Timings.fromModel(Timings? model) {
+    fajr = model!.fajr;
+    sunrise = model.sunrise;
+    dhuhr = model.dhuhr;
+    asr = model.asr;
+    sunset = model.sunset;
+    maghrib = model.maghrib;
+    isha = model.isha;
+    imsak = model.imsak;
+    midnight = model.midnight;
   }
 
   Map<String, dynamic> toJson() {

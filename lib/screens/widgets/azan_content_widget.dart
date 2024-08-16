@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../models/prayermodel.dart';
+import '../../models/prayerdatamodels.dart';
 import '../../themeModes/themes.dart';
 // import 'package:solar_icons/solar_icons.dart';
 
 class AzanContentWidget extends StatelessWidget {
   final Prayers prayerObj;
   final int index;
-  const AzanContentWidget({
-    super.key,
-    required this.prayerObj,
-    required this.index,
-  });
+  final int activeIndex;
+  const AzanContentWidget(
+      {super.key,
+      required this.prayerObj,
+      required this.index,
+      required this.activeIndex});
 
   @override
   Widget build(BuildContext context) {
-    late int activeIndex = 0;
     return Container(
       decoration: BoxDecoration(
         color: index == activeIndex ? Theme.of(context).primaryColor : null,

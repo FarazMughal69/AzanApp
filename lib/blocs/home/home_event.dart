@@ -14,6 +14,6 @@ class HomeInitialEvent extends HomeEvent {
   List<Object> get props => [];
 }
 
-class ScrollEvent extends HomeEvent {
-  const ScrollEvent();
+class HomeScrollingEvent extends HomeEvent {
+  const HomeScrollingEvent();
 }

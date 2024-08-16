@@ -1,5 +1,5 @@
-import 'package:azan/models/prayermodel.dart';
-import 'package:azan/resourses/api_provider/api_provider.dart';
+import 'package:azan/models/prayerdatamodels.dart';
+import 'package:azan/resourses/api_provider/api.azan_provider.dart';
 
 class ApiRepository {
   final _provider = ApiProvider();

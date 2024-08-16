@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193004733870",
+    "project_id": "azan-ffb4e",
+    "storage_bucket": "azan-ffb4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193004733870:android:348d007c18befdd04bf43f",
+        "android_client_info": {
+          "package_name": "com.example.azan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcw51Xk9zx4FLYvT_pt0z3hDSNjbsxlYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

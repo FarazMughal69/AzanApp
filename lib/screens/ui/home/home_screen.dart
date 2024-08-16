@@ -1,3 +1,4 @@
+import 'package:azan/blocs/bloc/utility_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solar_icons/solar_icons.dart';
@@ -5,7 +6,6 @@ import 'package:solar_icons/solar_icons.dart';
 import 'package:azan/themeModes/themes.dart';
 
 import '../../../main.dart';
-import '../../../utility/utility.dart';
 import '../../widgets/app_features_widget.dart';
 import '../../widgets/azan_content_widget.dart';
 import '../../../blocs/home/home_bloc.dart';
@@ -22,7 +22,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeBloc bloc = BlocProvider.of<HomeBloc>(context);
+    final UtilityBloc uBloc = BlocProvider.of<UtilityBloc>(context);
     context.read<HomeBloc>().add(const HomeInitialEvent());
+    context.read<UtilityBloc>().add(const UtilityIntialEvent());
     // print('HomeInitialEvent is triggered');
     return SafeArea(
       child: Scaffold(
@@ -33,15 +35,10 @@ class HomeScreen extends StatelessWidget {
             Positioned(
               width: mq.width,
               height: mq.height * 0.30,
-              child: BlocListener<HomeBloc, HomeState>(
-                bloc: bloc,
+              child: BlocListener<UtilityBloc, UtilityState>(
+                bloc: uBloc,
                 listener: (context, state) {
-                  if (state is HomeInitialState) {
-                    // print('HomeInitialState is listened by the listener');
-                    context.read<HomeBloc>().add(const ScrollEvent());
-                  }
-                  if (state is HomeScrollingState) {
-                    // print('HomeScrollingState is listened by the listener');
+                  if (state is UtilityHomeScrollingState) {
                     double offset;
                     _scrollController.addListener(() {
                       offset = _scrollController.offset;
@@ -98,9 +95,19 @@ class HomeScreen extends StatelessWidget {
                       reverseShadow: true,
                     ),
                     child: ListTile(
-                      title: Text(
-                        'Asar',
-                        style: Theme.of(context).textTheme.titleLarge,
+                      title: BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          if (state is HomeLoadedState) {
+                            return Text(
+                              state.nextPrayer,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            );
+                          }
+                          return Text(
+                            'Asar',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          );
+                        },
                       ),
                       subtitle: Text(
                         'Next Prayer In 01:23',
@@ -141,24 +148,26 @@ class HomeScreen extends StatelessWidget {
                         }
                         if (state is HomeLoadedState) {
                           // ignore: unused_local_variable
-                          var timings = Utility.extractTodayPrayerList(
-                              state.prayerTimings.data);
+                          // context
+                          //     .read<HomeBloc>()
+                          //     .add(const HomeScrollingEvent());
+                          // var timings = Utility.extractTodayPrayer(
+                          //     state.prayerTimings.data);
                           return ListView.builder(
-                            itemCount:
-                                Utility.getPrayerNameWithTime(timings).length,
+                            itemCount: state.prayerTimingsList.length,
                             itemBuilder: (context, index) {
-                              final prayer =
-                                  Utility.getPrayerNameWithTime(timings)[index];
                               return AzanContentWidget(
                                 index: index,
-                                prayerObj: prayer,
+                                prayerObj: state.prayerTimingsList[index],
+                                activeIndex: state.index,
                               );
                             },
                           );
+                        } else {
+                          return const Center(
+                            child: Text('Network Error'),
+                          );
                         }
-                        return const Center(
-                          child: Text('Error'),
-                        );
                       },
                     ),
                   ),
@@ -250,9 +259,19 @@ class HomeScreen extends StatelessWidget {
                     'Today',
                     style: ThemeStyle.titleLargeActiveIndexTextStyle,
                   ),
-                  subtitle: Text(
-                    '11 Muharram 1446 AH',
-                    style: ThemeStyle.bodySmallActiveIndexTextStyle,
+                  subtitle: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      if (state is HomeLoadedState) {
+                        return Text(
+                          state.hijriDate,
+                          style: ThemeStyle.bodySmallActiveIndexTextStyle,
+                        );
+                      }
+                      return Text(
+                        'Islamic Calender Date Today',
+                        style: ThemeStyle.bodySmallActiveIndexTextStyle,
+                      );
+                    },
                   ),
                   trailing: GestureDetector(
                     onTap: () {},
